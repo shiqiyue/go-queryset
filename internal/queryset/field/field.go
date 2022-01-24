@@ -2,11 +2,10 @@ package field
 
 import (
 	"fmt"
+	"github.com/iancoleman/strcase"
 	"go/types"
 	"reflect"
 	"strings"
-
-	"gorm.io/gorm"
 )
 
 type BaseInfo struct {
@@ -99,7 +98,7 @@ func (g InfoGenerator) GenFieldInfo(f Field) *Info {
 		return nil
 	}
 
-	dbName := gorm.ToDBName(f.Name())
+	dbName := strcase.ToSnake(f.Name())
 	if dbColName := tagSetting["COLUMN"]; dbColName != "" {
 		dbName = dbColName
 	}
