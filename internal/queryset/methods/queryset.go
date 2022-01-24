@@ -353,8 +353,8 @@ func NewCountMethod(qsTypeName string) CountMethod {
 	return CountMethod{
 		baseQuerySetMethod: newBaseQuerySetMethod(qsTypeName),
 		namedMethod:        newNamedMethod("Count"),
-		constRetMethod:     newConstRetMethod("(int, error)"),
-		constBodyMethod: newConstBodyMethod(`var count int
+		constRetMethod:     newConstRetMethod("(int64, error)"),
+		constBodyMethod: newConstBodyMethod(`var count int64
 			err := %s.Count(&count).Error
 			return count, err`, qsDbName),
 	}

@@ -9,8 +9,8 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/jirfag/go-queryset/internal/parser"
 	"github.com/pkg/errors"
+	"github.com/shiqiyue/go-queryset/internal/parser"
 	"golang.org/x/tools/imports"
 )
 
@@ -59,7 +59,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/jinzhu/gorm"
+	"gorm.io/gorm"
 )
 `
 
