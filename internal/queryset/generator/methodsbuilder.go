@@ -65,11 +65,14 @@ func (b *methodsBuilder) getQuerySetMethodsForField(f field.Info) []methods.Meth
 	}
 
 	if f.IsPointer {
-		ptrMethods := b.getQuerySetMethodsForField(f.GetPointed())
+		insF := f.GetPointed()
+		ptrMethods := b.getQuerySetMethodsForField(insF)
+		if insF.IsString || insF.IsNumeric {
+			ptrMethods = append(ptrMethods, methods.NewPointerEqFilterMethodImpl(fctx))
+		}
 		return append(ptrMethods,
 			methods.NewIsNullMethod(fctx),
-			methods.NewIsNotNullMethod(fctx),
-			methods.NewPointerEqFilterMethodImpl(fctx))
+			methods.NewIsNotNullMethod(fctx))
 	}
 
 	// it's a string
