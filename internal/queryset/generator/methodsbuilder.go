@@ -68,7 +68,8 @@ func (b *methodsBuilder) getQuerySetMethodsForField(f field.Info) []methods.Meth
 		ptrMethods := b.getQuerySetMethodsForField(f.GetPointed())
 		return append(ptrMethods,
 			methods.NewIsNullMethod(fctx),
-			methods.NewIsNotNullMethod(fctx))
+			methods.NewIsNotNullMethod(fctx),
+			methods.NewPointerEqFilterMethodImpl(fctx))
 	}
 
 	// it's a string
