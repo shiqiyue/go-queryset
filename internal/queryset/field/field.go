@@ -9,10 +9,12 @@ import (
 )
 
 type BaseInfo struct {
-	Name      string // name of field
-	DBName    string // name of field in DB
-	TypeName  string // name of type of field
-	IsStruct  bool
+	Name     string // name of field
+	DBName   string // name of field in DB
+	TypeName string // name of type of field
+	IsStruct bool
+	IsCustom bool // 是否自定义数据类型
+
 	IsNumeric bool
 	IsTime    bool
 	IsString  bool
@@ -111,6 +113,13 @@ func (g InfoGenerator) GenFieldInfo(f Field) *Info {
 	if bi.TypeName == "time.Time" {
 		bi.IsTime = true
 		bi.IsNumeric = true
+		return &Info{
+			BaseInfo: bi,
+		}
+	}
+	if strings.Contains(bi.TypeName, "github.com/lib/pq") {
+		bi.IsCustom = true
+		bi.TypeName = strings.Trim(bi.TypeName, "github.com/lib/")
 		return &Info{
 			BaseInfo: bi,
 		}

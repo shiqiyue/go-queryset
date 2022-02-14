@@ -59,6 +59,10 @@ func (b *methodsBuilder) getQuerySetMethodsForField(f field.Info) []methods.Meth
 		return append(basicTypeMethods, numericMethods...)
 	}
 
+	if f.IsCustom {
+		return basicTypeMethods
+	}
+
 	if f.IsStruct {
 		// Association was found (any struct or struct pointer)
 		return []methods.Method{methods.NewPreloadMethod(fctx)}
