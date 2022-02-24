@@ -32,6 +32,10 @@ const qsCode = `
 	  return New{{ .Name }}(db)
   }
 
+  func (qs {{ .Name }}) With(callback func(db *gorm.DB) *gorm.DB) {{ .Name }} {
+	  return qs.w(callback(qs.db))
+  }
+
   func (qs {{ .Name }}) Select(fields ...{{ $ft }}) {{ .Name }} {
 	  names := []string{}
 	  for _, f := range fields {

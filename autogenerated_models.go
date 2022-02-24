@@ -31,6 +31,10 @@ func (qs TagQuerySet) w(db *gorm.DB) TagQuerySet {
 	return NewTagQuerySet(db)
 }
 
+func (qs TagQuerySet) With(callback func(db *gorm.DB) *gorm.DB) TagQuerySet {
+	return qs.w(callback(qs.db))
+}
+
 func (qs TagQuerySet) Select(fields ...TagDBSchemaField) TagQuerySet {
 	names := []string{}
 	for _, f := range fields {
