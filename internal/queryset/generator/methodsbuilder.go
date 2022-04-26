@@ -47,6 +47,12 @@ func (b *methodsBuilder) getQuerySetMethodsForField(f field.Info) []methods.Meth
 		methods.NewBinaryFilterMethod(fctx.WithOperationName("gte")),
 	}
 
+	arrayMethods := []methods.Method{
+		methods.NewBinaryFilterMethod(fctx.WithOperationName("contain")),
+		methods.NewBinaryFilterMethod(fctx.WithOperationName("containBy")),
+		methods.NewBinaryFilterMethod(fctx.WithOperationName("overlap")),
+	}
+
 	if f.IsString {
 		likeMethod := methods.NewBinaryFilterMethod(fctx.WithOperationName("like"))
 		notLikeMethod := methods.NewBinaryFilterMethod(fctx.WithOperationName("notlike"))
@@ -60,6 +66,9 @@ func (b *methodsBuilder) getQuerySetMethodsForField(f field.Info) []methods.Meth
 	}
 
 	if f.IsCustom {
+		if f.IsArray {
+			return append(basicTypeMethods, arrayMethods...)
+		}
 		return basicTypeMethods
 	}
 

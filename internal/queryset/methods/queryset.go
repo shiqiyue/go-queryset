@@ -196,14 +196,17 @@ func NewNotInFilterMethod(ctx QsFieldContext) InFilterMethod {
 
 func getWhereCondition(name string) string {
 	nameToOp := map[string]string{
-		"eq":      "=",
-		"ne":      "!=",
-		"lt":      "<",
-		"lte":     "<=",
-		"gt":      ">",
-		"gte":     ">=",
-		"like":    "LIKE",
-		"notlike": "NOT LIKE",
+		"eq":        "=",
+		"ne":        "!=",
+		"lt":        "<",
+		"lte":       "<=",
+		"gt":        ">",
+		"gte":       ">=",
+		"like":      "LIKE",
+		"notlike":   "NOT LIKE",
+		"contain":   "@>",
+		"containBy": "<@",
+		"overlap":   "&&",
 	}
 	op := nameToOp[name]
 	if op == "" {

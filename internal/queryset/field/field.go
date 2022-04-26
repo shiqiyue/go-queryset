@@ -14,6 +14,7 @@ type BaseInfo struct {
 	TypeName string // name of type of field
 	IsStruct bool
 	IsCustom bool // 是否自定义数据类型
+	IsArray  bool // 是否是数组
 
 	IsNumeric bool
 	IsTime    bool
@@ -120,6 +121,9 @@ func (g InfoGenerator) GenFieldInfo(f Field) *Info {
 	if strings.Contains(bi.TypeName, "github.com/lib/pq") {
 		bi.IsCustom = true
 		bi.TypeName = strings.Trim(bi.TypeName, "github.com/lib/")
+		if strings.Contains(bi.TypeName, "Array") {
+			bi.IsArray = true
+		}
 		return &Info{
 			BaseInfo: bi,
 		}
