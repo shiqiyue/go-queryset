@@ -107,6 +107,7 @@ func (b *methodsBuilder) buildUpdaterStructMethods() {
 	b.ret = append(b.ret,
 		methods.NewUpdaterUpdateMethod(updaterTypeName),
 		methods.NewUpdaterUpdateNumMethod(updaterTypeName),
+		methods.NewUpdaterWithMethod(updaterTypeName),
 	)
 }
 

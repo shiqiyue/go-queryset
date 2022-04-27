@@ -118,3 +118,27 @@ func NewUpdaterUpdateNumMethod(updaterTypeName string) UpdaterUpdateNumMethod {
 		),
 	}
 }
+
+type UpdaterWithMethod struct {
+	namedMethod
+	baseUpdaterMethod
+	oneArgMethod
+	constRetMethod
+	constBodyMethod
+}
+
+// NewUpdaterUpdateNumMethod creates new UpdateNum method
+func NewUpdaterWithMethod(updaterTypeName string) UpdaterWithMethod {
+	return UpdaterWithMethod{
+		namedMethod:       newNamedMethod("With"),
+		baseUpdaterMethod: newBaseUpdaterMethod(updaterTypeName),
+		oneArgMethod:      newOneArgMethod("callback", "func(fields map[string]interface{}) map[string]interface{}"),
+		constRetMethod:    newConstRetMethod(updaterTypeName),
+		constBodyMethod: newConstBodyMethod(
+			strings.Join([]string{
+				"u.fields = callback(u.fields)",
+				"return u",
+			}, "\n"),
+		),
+	}
+}
