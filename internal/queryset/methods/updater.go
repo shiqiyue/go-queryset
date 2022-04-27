@@ -52,6 +52,31 @@ func NewUpdaterSetMethod(fieldName, fieldTypeName,
 	return r
 }
 
+func NewUpdaterIncMethod(fieldName, fieldTypeName,
+	updaterTypeName, dbSchemaTypeName string) UpdaterSetMethod {
+
+	argName := fieldNameToArgName(fieldName)
+	cbm := newConstBodyMethod(
+		`u.fields[string(%s.%s)] = gorm.Expr(string(%s.%s)+" + ?", %s)
+		return u`,
+		dbSchemaTypeName,
+		fieldName,
+		dbSchemaTypeName,
+		fieldName,
+		argName)
+
+	r := UpdaterSetMethod{
+		onFieldMethod:     newOnFieldMethod("Inc", fieldName),
+		oneArgMethod:      newOneArgMethod(argName, fieldTypeName),
+		baseUpdaterMethod: newBaseUpdaterMethod(updaterTypeName),
+		constRetMethod:    newConstRetMethod(updaterTypeName),
+		constBodyMethod:   cbm,
+		dbSchemaTypeName:  dbSchemaTypeName,
+	}
+	r.setFieldNameFirst(false)
+	return r
+}
+
 // UpdaterUpdateMethod creates Update method
 type UpdaterUpdateMethod struct {
 	namedMethod

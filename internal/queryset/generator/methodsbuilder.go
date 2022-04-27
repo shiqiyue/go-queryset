@@ -127,6 +127,12 @@ func (b *methodsBuilder) buildUpdaterFieldMethods(f field.Info) {
 	b.ret = append(b.ret,
 		methods.NewUpdaterSetMethod(f.Name, f.TypeName, updaterTypeName,
 			dbSchemaTypeName))
+
+	if f.IsNumeric {
+		b.ret = append(b.ret,
+			methods.NewUpdaterIncMethod(f.Name, f.TypeName, updaterTypeName,
+				dbSchemaTypeName))
+	}
 }
 
 func (b *methodsBuilder) buildStructSelectMethods() *methodsBuilder {
