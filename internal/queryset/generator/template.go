@@ -71,10 +71,22 @@ const qsCode = `
 		{{ range .Fields }}
 			{{ .Name }} {{ $ft }}
 		{{- end }}
+			GetField func(str string){{ .StructName }}DBSchemaField
 	}{
 		{{ range .Fields }}
 			{{ .Name }}: {{ $ft }}("{{ .DBName }}"),
 		{{- end }}
+			GetField: func(str string) {{ .StructName }}DBSchemaField {
+				if str == ""{
+					return ""
+				}
+				{{ range .Fields }}
+				if strings.ToLower(str) == strings.ToLower("{{ .DBName }}"){
+					return {{ $ft }}("{{ .DBName }}")
+				}
+				{{- end }}
+				return ""
+			},
 	}
 
 	// Update updates {{ .StructName }} fields by primary key
