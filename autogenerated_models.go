@@ -612,6 +612,7 @@ var IdeaTagStatDBSchema = struct {
 	TagId       IdeaTagStatDBSchemaField
 	UseCount    IdeaTagStatDBSchemaField
 	SearchCount IdeaTagStatDBSchemaField
+	GetField    func(str string) IdeaTagStatDBSchemaField
 }{
 
 	Id:          IdeaTagStatDBSchemaField("id"),
@@ -620,6 +621,31 @@ var IdeaTagStatDBSchema = struct {
 	TagId:       IdeaTagStatDBSchemaField("tag_id"),
 	UseCount:    IdeaTagStatDBSchemaField("use_count"),
 	SearchCount: IdeaTagStatDBSchemaField("search_count"),
+	GetField: func(str string) IdeaTagStatDBSchemaField {
+		if str == "" {
+			return ""
+		}
+
+		if strings.ToLower(str) == strings.ToLower("id") {
+			return IdeaTagStatDBSchemaField("id")
+		}
+		if strings.ToLower(str) == strings.ToLower("created_at") {
+			return IdeaTagStatDBSchemaField("created_at")
+		}
+		if strings.ToLower(str) == strings.ToLower("updated_at") {
+			return IdeaTagStatDBSchemaField("updated_at")
+		}
+		if strings.ToLower(str) == strings.ToLower("tag_id") {
+			return IdeaTagStatDBSchemaField("tag_id")
+		}
+		if strings.ToLower(str) == strings.ToLower("use_count") {
+			return IdeaTagStatDBSchemaField("use_count")
+		}
+		if strings.ToLower(str) == strings.ToLower("search_count") {
+			return IdeaTagStatDBSchemaField("search_count")
+		}
+		return ""
+	},
 }
 
 // Update updates IdeaTagStat fields by primary key
