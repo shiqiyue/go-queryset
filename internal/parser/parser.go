@@ -187,7 +187,7 @@ func parseStructFields(s *types.Struct) []StructField {
 		if !f.Exported() {
 			continue
 		}
-		log.Println(f.Name(), f.Type())
+		log.Println(f.Name(), f.Type(), f.String(), f)
 
 		sf := newStructField(f, s.Tag(i))
 		fields = append(fields, *sf)
