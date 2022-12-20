@@ -70,9 +70,17 @@ func (p Structs) ParseFile(ctx context.Context, filePath string) (*Result, error
 		// can't use filepath.Join because it calls Clean and removes "."+sep
 		inPkgName = fmt.Sprintf(".%c%s", filepath.Separator, inPkgName)
 	}
-
+	mode := packages.NeedDeps |
+		packages.NeedName |
+		packages.NeedSyntax |
+		packages.NeedFiles |
+		packages.NeedTypesInfo |
+		packages.NeedModule |
+		packages.NeedImports |
+		packages.NeedTypes |
+		packages.NeedCompiledGoFiles
 	pkgs, err := packages.Load(&packages.Config{
-		Mode:    packages.LoadAllSyntax,
+		Mode:    mode,
 		Context: ctx,
 		Tests:   false,
 	}, inPkgName)
