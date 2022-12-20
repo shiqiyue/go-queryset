@@ -7,6 +7,7 @@ import (
 	"go/parser"
 	"go/token"
 	"go/types"
+	"log"
 	"path/filepath"
 	"reflect"
 	"strings"
@@ -186,6 +187,7 @@ func parseStructFields(s *types.Struct) []StructField {
 		if !f.Exported() {
 			continue
 		}
+		log.Println(f.Name(), f.Type())
 
 		sf := newStructField(f, s.Tag(i))
 		fields = append(fields, *sf)
