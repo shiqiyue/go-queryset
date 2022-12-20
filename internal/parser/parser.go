@@ -79,9 +79,11 @@ func (p Structs) ParseFile(ctx context.Context, filePath string) (*Result, error
 		packages.NeedImports |
 		packages.NeedTypes |
 		packages.NeedCompiledGoFiles
+	log.Println("inPkgName", inPkgName)
 	pkgs, err := packages.Load(&packages.Config{
 		Mode:    mode,
 		Context: ctx,
+		Dir:     inPkgName,
 		Tests:   false,
 	}, inPkgName)
 	if err != nil {
